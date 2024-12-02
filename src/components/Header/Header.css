@@ -1,0 +1,50 @@
+/* src/components/Header/Header.css */
+
+/* Estilos para el Header fijo */
+.header {
+  position: fixed; /* Fija el header en la parte superior */
+  top: 0; /* Lo coloca en la parte superior de la página */
+  left: 0; /* Alinea el header al borde izquierdo */
+  width: 100%; /* El header ocupará todo el ancho de la pantalla */
+  background-color: #333; /* Fondo oscuro */
+  color: white; /* Texto blanco */
+  padding: 10px 0; /* Espaciado interior */
+  text-align: center; /* Alineación del texto */
+  z-index: 1000; /* Asegura que el header esté encima de otros elementos */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil debajo */
+  min-width: 200px;
+}
+
+/* Estilo para los botones del header */
+.header button {
+  background-color: #4caf50; /* Fondo verde */
+  color: white; /* Texto blanco */
+  border: none; /* Sin borde */
+  padding: 10px 20px; /* Espaciado interior */
+  font-size: 16px; /* Tamaño de la fuente */
+  cursor: pointer; /* Cambio de cursor a pointer */
+  margin: 0 10px; /* Espaciado entre botones */
+}
+
+.header button:hover {
+  background-color: #45a049; /* Color ligeramente más oscuro al pasar el mouse */
+}
+
+/* Estilos para el contenido debajo del header */
+.content {
+  margin-top: 10px; /* Ajustamos el margen superior para que no quede tapado por el header */
+}
+
+@media (max-width: 500px) {
+  header button {
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 20px;
+  }
+}
+
+@media (max-width: 250px) {
+  .header > button {
+    gap: 10px;
+  }
+}
