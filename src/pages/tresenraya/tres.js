@@ -10,11 +10,6 @@ export const inittres = () => {
   const gameContainer = document.createElement('div')
   gameContainer.classList.add('game-container')
 
-  // Título
-  const title = document.createElement('h1')
-  title.textContent = 'Tres en Raya'
-  gameContainer.appendChild(title)
-
   // Crear el tablero
   const board = document.createElement('div')
   board.classList.add('board')
@@ -36,9 +31,25 @@ export const inittres = () => {
   resetButton.textContent = 'Reiniciar Juego'
   status.appendChild(resetButton)
 
+  // Mostrar la puntuación
+  const scoreBoard = document.createElement('p')
+  scoreBoard.setAttribute('id', 'score')
+  gameContainer.appendChild(scoreBoard)
+
   // Añadir todo al contenedor principal
   gameContainer.appendChild(status)
   divContent.appendChild(gameContainer)
+
+  // Recuperar la puntuación desde el localStorage
+  let xWins = parseInt(localStorage.getItem('xWins')) || 0
+  let oWins = parseInt(localStorage.getItem('oWins')) || 0
+  let draws = parseInt(localStorage.getItem('draws')) || 0
+
+  // Actualizar la puntuación en la UI
+  function updateScore() {
+    scoreBoard.textContent = `X: ${xWins} | O: ${oWins} | Empates: ${draws}`
+  }
+  updateScore()
 
   // Lógica del juego
   let boardState = ['', '', '', '', '', '', '', '', ''] // Estado del tablero
@@ -69,10 +80,21 @@ export const inittres = () => {
     if (checkWinner()) {
       message.textContent = `${currentPlayer} ha ganado!`
       gameActive = false
+      if (currentPlayer === 'X') {
+        xWins++
+        localStorage.setItem('xWins', xWins) // Actualizar puntuación en localStorage
+      } else {
+        oWins++
+        localStorage.setItem('oWins', oWins) // Actualizar puntuación en localStorage
+      }
+      updateScore() // Actualizar la puntuación mostrada
     } else if (boardState.every((cell) => cell !== '')) {
       // Si no hay ganador y el tablero está lleno, es un empate
       message.textContent = '¡Empate!'
       gameActive = false
+      draws++
+      localStorage.setItem('draws', draws) // Actualizar empates en localStorage
+      updateScore() // Actualizar la puntuación mostrada
     } else {
       // Cambiar al siguiente jugador
       currentPlayer = currentPlayer === 'X' ? 'O' : 'X'

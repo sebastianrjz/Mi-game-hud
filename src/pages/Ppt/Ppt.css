@@ -73,15 +73,16 @@ h2 {
     width: 350px;
     display: flex;
   }
-}
-@media (max-width: 460px) {
   .contenedor1 {
-    margin-top: 180px;
+    margin-top: 80px;
     max-width: 300px;
   }
   #campo-batalla {
     width: 300px;
     display: flex;
     margin: 5px;
+  }
+  .btn-ataques {
+    width: 50px;
   }
 }

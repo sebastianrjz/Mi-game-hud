@@ -1,8 +1,5 @@
 import './adivina.css'
 
-// Lógica del juego Adivina el número
-
-// Crear la estructura HTML del juego dinámicamente
 document.body.style.fontFamily = 'Arial, sans-serif'
 document.body.style.margin = 0
 document.body.style.padding = 0
@@ -48,11 +45,24 @@ export const initMole = () => {
 
   const attemptsText = document.createElement('p')
   gameContainer.appendChild(attemptsText)
+
+  // Mensaje de números adivinados
+  const guessedNumbersText = document.createElement('p')
+  gameContainer.appendChild(guessedNumbersText)
+
   divContent.appendChild(gameContainer)
 
-  // Número aleatorio
-  const targetNumber = Math.floor(Math.random() * 100) + 1 // Número aleatorio entre 1 y 100
-  let attempts = 0 // Contador de intentos
+  // Recuperar el estado desde localStorage
+  let targetNumber =
+    parseInt(localStorage.getItem('targetNumber')) ||
+    Math.floor(Math.random() * 100) + 1
+  let attempts = parseInt(localStorage.getItem('attempts')) || 0
+  let gameEnded = localStorage.getItem('gameEnded') === 'true'
+  let guessedNumbers = JSON.parse(localStorage.getItem('guessedNumbers')) || []
+
+  // Mostrar el número de intentos y si el juego terminó
+  attemptsText.textContent = `Intentos: ${attempts}`
+  guessedNumbersText.textContent = `Números adivinados: ${guessedNumbers.length}`
 
   // Función para manejar la comprobación de la adivinanza
   submitGuess.addEventListener('click', function () {
@@ -71,22 +81,24 @@ export const initMole = () => {
     // Verificar si el número adivinado es correcto
     if (guess === targetNumber) {
       // Si el número adivinado está entre 80 y 100
-      if (guess >= 80 && guess <= 100) {
-        hint.textContent = `¡Adivinaste el número ${targetNumber} en ${attempts} intentos!`
-        hint.style.color = 'blue' // Mensaje en azul
-      } else {
-        hint.textContent = `¡Felicidades! Has adivinado el número ${targetNumber} en ${attempts} intentos.`
-        hint.style.color = '#5bc0de' // Mensaje en verde
-      }
-      guessInput.disabled = true
-      submitGuess.disabled = true
+
+      gameEnded = true
+      localStorage.setItem('gameEnded', 'true')
     } else if (guess < targetNumber) {
       hint.textContent = '¡El número es mayor!'
       hint.style.color = '#d9534f' // Mensaje en rojo
     } else {
       hint.textContent = '!ADIVINASTE!'
       hint.style.color = '#555' // Mensaje en rojo
+      guessedNumbersText.textContent = `Números adivinados: ${guessedNumbers.length}`
+      guessedNumbers.push(targetNumber) // Agregar el número adivinado a la lista
     }
+
+    // Guardar el estado en localStorage
+    localStorage.setItem('targetNumber', targetNumber)
+    localStorage.setItem('attempts', attempts)
+    localStorage.setItem('gameEnded', gameEnded)
+    localStorage.setItem('guessedNumbers', JSON.stringify(guessedNumbers))
 
     // Limpiar el input después de cada intento
     guessInput.value = ''

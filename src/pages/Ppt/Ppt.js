@@ -1,5 +1,4 @@
-import './Ppt.css' // Asumimos que este archivo contiene los estilos CSS necesarios
-
+import './Ppt.css'
 let opcionJugador
 let opcionPc
 let imgJugador
@@ -15,7 +14,6 @@ export const initPpt = () => {
   function crearJuego() {
     const body = document.createElement('div')
     body.className = 'contenedor1'
-    // Crear el título <h1>
 
     // Crear el contenedor del campo de batalla
     const campoBatalla = document.createElement('div')
@@ -113,6 +111,22 @@ export const initPpt = () => {
     { name: 'Tijeras', url: 'assets/Ppt/Tijeras.PNG' }
   ]
 
+  // Cargar el estado del juego desde localStorage
+  let victorias = parseInt(localStorage.getItem('victorias')) || 0
+  let derrotas = parseInt(localStorage.getItem('derrotas')) || 0
+  let empates = parseInt(localStorage.getItem('empates')) || 0
+
+  // Crear el div con los resultados
+  const resultadosDiv = document.createElement('div')
+  resultadosDiv.innerHTML = `
+    <h3>Resultados:</h3>
+    <p>Victorias: ${victorias}</p>
+    <p>Derrotas: ${derrotas}</p>
+    <p>Empates: ${empates}</p>
+  `
+  // Colocar el div de resultados debajo del mensaje de batalla
+  msjBatalla.parentNode.insertBefore(resultadosDiv, msjBatalla.nextSibling)
+
   // Lógica para manejar el inicio del juego
   function iniciar() {
     seccionBatalla.style.display = 'none' // Esconde la sección de la batalla inicialmente
@@ -154,17 +168,26 @@ export const initPpt = () => {
   function batalla() {
     if (opcionJugador === opcionPc) {
       msjBatalla.innerHTML = 'Empate'
+      empates++
     } else if (
       (opcionJugador === 'Piedra' && opcionPc === 'Tijeras') ||
       (opcionJugador === 'Papel' && opcionPc === 'Piedra') ||
       (opcionJugador === 'Tijeras' && opcionPc === 'Papel')
     ) {
       msjBatalla.innerHTML = '¡Ganaste!'
+      victorias++
     } else {
       msjBatalla.innerHTML = 'Perdiste :('
+      derrotas++
     }
 
+    // Actualizar y guardar los resultados
+    localStorage.setItem('victorias', victorias)
+    localStorage.setItem('derrotas', derrotas)
+    localStorage.setItem('empates', empates)
+
     addImagenes()
+    actualizarResultados()
   }
 
   // Función para generar un número aleatorio para la PC
@@ -186,32 +209,18 @@ export const initPpt = () => {
       }
     })
 
-    // Función para detener el juego
-    const detenerJuego = () => {
-      if (juegoActivo) {
-        clearInterval(intervalo) // Detener el intervalo
-        juegoActivo = false // Marcar el juego como detenido
-        COUNT = 0 // Resetear el contador
-        const divContent = document.querySelector('.content')
-        divContent.innerHTML = '' // Limpiar todo el contenido del juego
-        console.log('Juego detenido')
-      }
-    }
-
-    // Seleccionar el botón y añadir el evento de clic
-    const botones = document.querySelectorAll('button') // Selecciona todos los botones
-    botones.forEach((boton) => {
-      boton.addEventListener('click', (e) => {
-        detenerJuego() // Detener el juego antes de cambiar de página
-        // Aquí puedes agregar cualquier código adicional para cambiar de página, si es necesario.
-      })
-    })
-
-    // Escuchar el evento 'detenerJuego' y ejecutar la función detenerJuego
-    document.addEventListener('detenerJuego', detenerJuego)
-
     // Mostrar la sección de la batalla
     seccionBatalla.style.display = 'flex'
+  }
+
+  // Actualizar la visualización de los resultados
+  function actualizarResultados() {
+    resultadosDiv.innerHTML = `
+      <h3>Resultados:</h3>
+      <p>Victorias: ${victorias}</p>
+      <p>Derrotas: ${derrotas}</p>
+      <p>Empates: ${empates}</p>
+    `
   }
 
   window.addEventListener('load', iniciar)

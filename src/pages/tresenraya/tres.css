@@ -78,4 +78,17 @@ h1 {
     text-align: center;
     margin-top: 130px;
   }
+  .board {
+    display: grid;
+  }
+}
+
+@media (max-width: 390px) {
+  .board {
+    width: 190px;
+    margin-right: 100px;
+  }
+  .game-container {
+    margin-right: 20px;
+  }
 }
