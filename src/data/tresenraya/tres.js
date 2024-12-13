@@ -1,73 +1,40 @@
-import './tres.css'
+// juego.js
 
-// Exporta la función que inicializa el juego de Tres en Raya
+import { crearTablero } from '../../components/tresenraya/tres'
+
 export const inittres = () => {
-  // Obtener el contenedor donde insertaremos el juego
-  const divContent = document.querySelector('.content')
-  divContent.innerHTML = '' // Limpiar el contenido existente
-
-  // Crear contenedor principal
-  const gameContainer = document.createElement('div')
-  gameContainer.classList.add('game-container')
-
-  // Crear el tablero
-  const board = document.createElement('div')
-  board.classList.add('board')
-  gameContainer.appendChild(board)
-
-  // Crear el mensaje de estado
-  const status = document.createElement('div')
-  status.classList.add('status')
-
-  // Mensaje de turno
-  const message = document.createElement('p')
-  message.setAttribute('id', 'message')
-  message.textContent = 'Turno de X'
-  status.appendChild(message)
-
-  // Botón de reinicio
-  const resetButton = document.createElement('button')
-  resetButton.setAttribute('id', 'reset')
-  resetButton.textContent = 'Reiniciar Juego'
-  status.appendChild(resetButton)
-
-  // Mostrar la puntuación
-  const scoreBoard = document.createElement('p')
-  scoreBoard.setAttribute('id', 'score')
-  gameContainer.appendChild(scoreBoard)
-
-  // Añadir todo al contenedor principal
-  gameContainer.appendChild(status)
-  divContent.appendChild(gameContainer)
+  // Obtener los elementos creados por la función de creación de la interfaz
+  const { gameContainer, board, status, message, resetButton, scoreBoard } =
+    crearTablero()
 
   // Recuperar la puntuación desde el localStorage
   let xWins = parseInt(localStorage.getItem('xWins')) || 0
   let oWins = parseInt(localStorage.getItem('oWins')) || 0
   let draws = parseInt(localStorage.getItem('draws')) || 0
 
-  // Actualizar la puntuación en la UI
+  // Función para actualizar la puntuación en la UI
   function updateScore() {
     scoreBoard.textContent = `X: ${xWins} | O: ${oWins} | Empates: ${draws}`
   }
   updateScore()
 
-  // Lógica del juego
-  let boardState = ['', '', '', '', '', '', '', '', ''] // Estado del tablero
-  let currentPlayer = 'X' // Jugador actual
+  // Estado del tablero y configuración inicial
+  let boardState = ['', '', '', '', '', '', '', '', '']
+  let currentPlayer = 'X'
   let gameActive = true
 
-  // Función para generar las celdas del tablero
+  // Crear las celdas del tablero
   for (let i = 0; i < 9; i++) {
     const cell = document.createElement('div')
     cell.classList.add('cell')
     cell.setAttribute('data-index', i)
     board.appendChild(cell)
 
-    // Agregar evento de click a cada celda
+    // Agregar evento de clic a cada celda
     cell.addEventListener('click', handleCellClick)
   }
 
-  // Función que maneja el clic en una celda
+  // Manejar el clic en una celda
   function handleCellClick(event) {
     const index = event.target.getAttribute('data-index')
     if (boardState[index] !== '' || !gameActive) return
@@ -82,21 +49,21 @@ export const inittres = () => {
       gameActive = false
       if (currentPlayer === 'X') {
         xWins++
-        localStorage.setItem('xWins', xWins) // Actualizar puntuación en localStorage
+        localStorage.setItem('xWins', xWins)
       } else {
         oWins++
-        localStorage.setItem('oWins', oWins) // Actualizar puntuación en localStorage
+        localStorage.setItem('oWins', oWins)
       }
-      updateScore() // Actualizar la puntuación mostrada
+      updateScore()
     } else if (boardState.every((cell) => cell !== '')) {
-      // Si no hay ganador y el tablero está lleno, es un empate
+      // Si no hay ganador y el tablero está lleno, es empate
       message.textContent = '¡Empate!'
       gameActive = false
       draws++
-      localStorage.setItem('draws', draws) // Actualizar empates en localStorage
-      updateScore() // Actualizar la puntuación mostrada
+      localStorage.setItem('draws', draws)
+      updateScore()
     } else {
-      // Cambiar al siguiente jugador
+      // Cambiar de jugador
       currentPlayer = currentPlayer === 'X' ? 'O' : 'X'
       message.textContent = `Turno de ${currentPlayer}`
     }

@@ -1,7 +1,7 @@
 import { Header } from './src/components/Header/Header'
-import { initMole } from './src/pages/adivina/adivina'
-import { initPpt } from './src/pages/Ppt/Ppt'
-import { inittres } from './src/pages/tresenraya/tres'
+import { initMole } from './src/data/adivina/adivina'
+import { initPpt } from './src/data/Ppt/ppt'
+import { inittres } from './src/data/tresenraya/tres'
 import './style.css'
 
 const divApp = document.querySelector('#app')

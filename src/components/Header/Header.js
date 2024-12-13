@@ -1,7 +1,7 @@
 // src/components/Header/Header.js
-import { initPpt } from '../../pages/Ppt/Ppt'
-import { initMole } from '../../pages/adivina/adivina'
-import { inittres } from '../../pages/tresenraya/tres'
+import { initPpt } from '../../data/Ppt/ppt'
+import { initMole } from '../../data/adivina/adivina'
+import { inittres } from '../../data/tresenraya/tres'
 import './Header.css'
 
 export const Header = (divApp) => {
@@ -12,7 +12,7 @@ export const Header = (divApp) => {
   const buttonWhack = document.createElement('button')
   const buttontres = document.createElement('button')
   buttonPpt.textContent = 'Piedra Papel o Tijera'
-  buttonWhack.textContent = 'adivina el numero'
+  buttonWhack.textContent = 'preguntas'
   buttontres.textContent = 'click tres-lineas'
   buttontres.addEventListener('click', inittres)
   buttonPpt.addEventListener('click', initPpt)

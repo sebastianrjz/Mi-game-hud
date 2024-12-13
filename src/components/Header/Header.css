@@ -30,11 +30,6 @@
   background-color: #45a049; /* Color ligeramente más oscuro al pasar el mouse */
 }
 
-/* Estilos para el contenido debajo del header */
-.content {
-  margin-top: 10px; /* Ajustamos el margen superior para que no quede tapado por el header */
-}
-
 @media (max-width: 500px) {
   header button {
     padding: 5px 10px;

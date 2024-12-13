@@ -35,7 +35,7 @@ body {
 
 #msj-batalla {
   font-size: 24px;
-  color: #333;
+  color: #ff0000;
   margin-top: 20px;
 }
 
@@ -45,18 +45,19 @@ body {
 
 h1 {
   font-size: 36px;
-  color: #333;
+  color: #ffffff;
 }
 
 h2 {
   font-size: 24px;
-  color: #333;
+  color: #c7ffbc;
 }
 
 .btn-ataques {
   width: 100px;
   cursor: pointer;
   margin: 10px;
+  border-radius: 60%;
   transition: transform 0.2s;
 }
 
@@ -75,12 +76,10 @@ h2 {
   }
   .contenedor1 {
     margin-top: 80px;
-    max-width: 300px;
   }
   #campo-batalla {
     width: 300px;
     display: flex;
-    margin: 5px;
   }
   .btn-ataques {
     width: 50px;

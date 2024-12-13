@@ -1,0 +1,130 @@
+/* Establecer fondo y tamaño de la página */
+body {
+  background: linear-gradient(
+    to bottom right,
+    #ff7e5f,
+    #feb47b
+  ); /* Fondo degradado */
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* Contenedor principal del juego */
+.content {
+  width: 100%;
+  max-width: 600px;
+  background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro para contraste */
+  padding: 5px;
+  border-radius: 10px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  animation: slideIn 0.5s ease-in-out;
+}
+
+/* Título del juego */
+h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  animation: fadeIn 1s ease-out;
+}
+
+/* Estilo de las preguntas */
+.question {
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+  animation: fadeIn 1.5s ease-out;
+}
+.content50 {
+  padding: 10px;
+}
+/* Estilo de las opciones */
+.options {
+  list-style: none;
+  padding: 0;
+}
+
+.options li {
+  background-color: #333;
+  margin: 10px 0;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.options li:hover {
+  background-color: #4caf50;
+  transform: scale(1.05);
+}
+
+.options li:active {
+  transform: scale(0.98);
+}
+
+/* Botones */
+button {
+  padding: 10px 20px;
+  background-color: #ff7e5f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #feb47b;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  0% {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Resultado final */
+#result {
+  font-size: 1.3rem;
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #333;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Botón reiniciar */
+#restartButton {
+  background-color: #ff7e5f;
+  display: none;
+}
+
+#restartButton.show {
+  display: inline-block;
+  margin-top: 20px;
+}
